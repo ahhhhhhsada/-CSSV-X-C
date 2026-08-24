@@ -26,6 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Check Python source
+        shell: pwsh
+        run: |
+          Get-ChildItem
+          python -m py_compile "BOM_AVL_Integrated_BOM_Order_v5.py"
+
       - name: Build Windows EXE
         shell: pwsh
         run: |
@@ -36,12 +42,12 @@ jobs:
             --collect-all xlrd `
             --hidden-import tkinter `
             --hidden-import openpyxl.cell._writer `
-            BOM_AVL_Integrated_Final_v4_BOM_Order.py
+            "BOM_AVL_Integrated_BOM_Order_v5.py"
 
       - name: Upload Windows EXE
         uses: actions/upload-artifact@v4
         with:
-          name: BOM_AVL采购备料一体化工具_Windows
+          name: BOM_AVL采购备料一体化工具_Windows_v5
           path: dist/BOM_AVL采购备料一体化工具.exe
           if-no-files-found: error
           retention-days: 30
